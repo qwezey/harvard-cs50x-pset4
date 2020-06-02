@@ -70,7 +70,7 @@ void recoverJpegs(RawFile* rawFile) {
     char fileNameBuffer[1024];
     for (; rawBytes < end; rawBytes += blockSize) {
         if (hasJpegSignature(rawBytes)) {
-            sprintf(fileNameBuffer, "%.3d.jpg", ++fileCount);
+            sprintf(fileNameBuffer, "%.3d.jpg", fileCount++);
             FILE* file = fopen(fileNameBuffer, "w+");
             fwrite(rawBytes, blockSize, 1, file);
             fclose(file);
