@@ -39,6 +39,10 @@ RawFile* parseArgs(int argc, char** argv) {
         printf("This program only accepts one argument\n");
         return NULL;
     }
+    if (argc < 2) {
+        printf("Usage: ./recover image\n");
+        return NULL;
+    }
     char* filename = argv[1];
     RawFile* file = getRawFile(filename);
     if (!file) {
