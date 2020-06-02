@@ -48,6 +48,32 @@ RawFile* parseArgs(int argc, char** argv) {
     return file;
 }
 
+/// Returns NULL if [bytes] doesn't have a JPEG signature, else returns 1.
+int hasJpegSignature(char* bytes) {
+    return bytes[0] == 0xff &&
+           bytes[1] == 0xd8 &&
+           bytes[2] == 0xff &&
+           bytes[4] & 0xe0 == 0xe0;
+}
+
+/// Recovers jpeg files from [rawFile] and saves them to disk.
+void recoverJpegs(RawFile* rawFile) {
+    char* rawBytes = rawFile->bytes;
+    long rawSize = rawFile->size;
+    char* end = rawBytes + rawSize;
+    int blockSize = 512;
+    int fileCount = 0;
+    char fileNameBuffer[1024];
+    for (; rawBytes < end; rawBytes += blockSize) {
+        if (hasJpegSignature(rawBytes)) {
+            sprintf(fileNameBuffer, "recovered-%d.jpg", ++fileCount);
+            FILE* file = fopen(fileNameBuffer, "w+");
+            fwrite(rawBytes, blockSize, 1, file);
+            fclose(file);
+        }
+    }
+}
+
 int main(int argc, char** argv) {
     RawFile* file = parseArgs(argc, argv);
     if (!file) return 1;
