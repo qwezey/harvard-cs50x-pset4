@@ -53,7 +53,7 @@ int hasJpegSignature(char* bytes) {
     return bytes[0] == 0xff &&
            bytes[1] == 0xd8 &&
            bytes[2] == 0xff &&
-           bytes[4] & 0xe0 == 0xe0;
+           bytes[3] & 0xe0 == 0xe0;
 }
 
 /// Recovers jpeg files from [rawFile] and saves them to disk.
