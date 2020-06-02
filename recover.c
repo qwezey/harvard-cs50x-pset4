@@ -68,13 +68,17 @@ void recoverJpegs(RawFile* rawFile) {
     int blockSize = 512;
     int fileCount = 0;
     char fileNameBuffer[1024];
-    for (; rawBytes < end; rawBytes += blockSize) {
+    while (rawBytes < end) {
         if (hasJpegSignature(rawBytes)) {
+            int size = blockSize;
+            while (rawBytes[size - 1]) size += blockSize;
             sprintf(fileNameBuffer, "%.3d.jpg", fileCount++);
             FILE* file = fopen(fileNameBuffer, "w+");
-            fwrite(rawBytes, blockSize, 1, file);
+            fwrite(rawBytes, size, 1, file);
             fclose(file);
-        }
+            rawBytes += size;
+        } else
+            rawBytes += blockSize;
     }
 }
 
