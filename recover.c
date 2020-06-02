@@ -12,7 +12,7 @@ FILE* getFile(int argc, char** argv) {
     char* filename = argv[1];
     FILE* file = fopen(filename, "r");
     if (!file) {
-        printf("There was an issue reading the file: %s\n");
+        printf("There was an issue reading the file: %s\n", filename);
         return NULL;
     }
     return file;
