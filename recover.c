@@ -77,6 +77,7 @@ void recoverJpegs(RawFile* rawFile) {
 int main(int argc, char** argv) {
     RawFile* file = parseArgs(argc, argv);
     if (!file) return 1;
+    recoverJpegs(file);
     freeRawFile(file);
     return 0;
 }
