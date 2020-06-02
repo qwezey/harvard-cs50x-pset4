@@ -34,7 +34,7 @@ void freeRawFile(RawFile* file) {
 /// Returns the file specified by the command line arguments.
 /// If bad arguments are passed or issue opening file, print
 /// error and return NULL. The returned file must be closed.
-RawFile* getFile(int argc, char** argv) {
+RawFile* parseArgs(int argc, char** argv) {
     if (argc > 2) {
         printf("This program only accepts one argument\n");
         return NULL;
@@ -49,7 +49,7 @@ RawFile* getFile(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-    RawFile* file = getFile(argc, argv);
+    RawFile* file = parseArgs(argc, argv);
     if (!file) return 1;
     freeRawFile(file);
     return 0;
