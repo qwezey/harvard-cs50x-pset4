@@ -50,10 +50,10 @@ RawFile* parseArgs(int argc, char** argv) {
 
 /// Returns NULL if [bytes] doesn't have a JPEG signature, else returns 1.
 int hasJpegSignature(char* bytes) {
-    return bytes[0] == 0xff &&
-           bytes[1] == 0xd8 &&
-           bytes[2] == 0xff &&
-           bytes[3] & 0xe0 == 0xe0;
+    return (__uint8_t)bytes[0] == 0xff &&
+           (__uint8_t)bytes[1] == 0xd8 &&
+           (__uint8_t)bytes[2] == 0xff &&
+           ((__uint8_t)bytes[3] & 0xe0) == 0xe0;
 }
 
 /// Recovers jpeg files from [rawFile] and saves them to disk.
